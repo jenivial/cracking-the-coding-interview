@@ -1,0 +1,70 @@
+#!markdown
+
+# Partition
+
+#!csharp
+
+public class Node
+{
+    public Node next = null;
+    public int data;
+    
+    public Node(int d)
+    {
+        data = d;
+    }
+
+    void appendToTail(int d)
+    {
+        Node end = new Node(d);
+        Node n = this;
+        while(n.next != null)
+        {
+            n = n.next;
+        }
+
+        n.next = end;
+    }
+}
+
+#!csharp
+
+public Node Partition(Node node, int input)
+{
+    Node left = new Node(-1);
+    Node right = new Node(-1);
+    var current = node;
+    while(current != null)
+    {
+        var next = current.next;
+        if(current.data >= input)
+        {
+            if(right.data == -1)
+            {
+                right = current;
+            }
+            else
+            {
+                current.next = right;
+                right = current;
+            }
+        }
+        else
+        {
+            if(left.data == -1)
+            {
+                left = current;
+            }
+            else
+            {
+                left.next = current;
+                left = current;
+            }
+        }
+
+        current = next;
+    }
+
+    left.next = right;
+    return left;
+}
